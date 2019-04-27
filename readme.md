@@ -36,7 +36,7 @@ docker-compose exec php vendor/bin/phpunit
 DB_CONNECTION=mysql
 DB_HOST=db
 DB_PORT=3306
-DB_DATABASE=codingChallenge
+DB_DATABASE=lumenApi
 DB_USERNAME=root
 DB_PASSWORD=secr3t
 

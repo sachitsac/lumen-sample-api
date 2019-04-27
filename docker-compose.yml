@@ -8,9 +8,9 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: secr3t
       MYSQL_ROOT_PASSWORD: secr3t
-      MYSQL_DATABASE: codingChallenge
+      MYSQL_DATABASE: lumenApi
     volumes:
-      - ./db_data:/var/lib/mysql
+      - dbdata:/var/lib/mysql
     ports:
       - "3307:3306"
     networks:
@@ -46,3 +46,6 @@ services:
 networks:
   app-network:
     driver: bridge
+volumes:
+  dbdata:
+    driver: local
