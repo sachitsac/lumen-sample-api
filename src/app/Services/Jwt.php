@@ -14,7 +14,7 @@ class Jwt implements IJwt
   public function fromUser(User $user): string
   {
     $payload = [
-      'iss' => "coding-challenge",
+      'iss' => "lumen-api",
       'sub' => $user->id,
       'iat' => time(),
       'exp' => time() + 60 * 60
