@@ -1,21 +1,97 @@
-# Lumen PHP Framework
+# Sample Api based on Laravel's Lumen micro-framework
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+## How to
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+### Prerequisite
+  - Docker for windows or mac
 
-## Official Documentation
+### Start
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+```
+docker-composer up -d
+```
 
-## Security Vulnerabilities
+### Migrate
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+```
+docker-compose exec php php artisan migrate
+```
 
-## License
+### Seed
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+docker-compose exec php php artisan db:seed
+```
+
+### Test
+
+```
+docker-compose exec php vendor/bin/phpunit
+```
+
+## Documentation
+
+### API
+
+**Get Jobs: Returns a list of jobs ( default 10 jobs returned)**
+
+```
+Method: GET
+URL: http://localhost:8080/api/jobs
+
+Params:
+- page (int) example ?page=1
+
+Header:
+Authorization: Bearer {TOKEN}
+```
+
+**Get Job: Returns a job for the requested job ID**
+
+```
+Method: GET
+URL: http://localhost:8080/api/jobs/{:id}
+
+Header:
+Authorization: Bearer {TOKEN}
+```
+
+**Create Job**
+
+```
+Method: POST
+URL: http://localhost:8080/api/jobs
+
+Params:
+- title (string) 
+- description (string)
+- location (string)
+
+Header:
+Authorization: Bearer {TOKEN}
+```
+
+**Update Job**
+
+```
+Method: PUT
+URL: http://localhost:8080/api/jobs/{:id}
+
+Params:
+- title (string) 
+- description (string)
+- location (string)
+
+Header:
+Authorization: Bearer {TOKEN}
+```
+
+**Delete Job**
+
+```
+Method: DELETE
+URL: http://localhost:8080/api/jobs/{:id}
+
+Header:
+Authorization: Bearer {TOKEN}
+```
