@@ -56,9 +56,9 @@ password: secr3t12345
 
 ### API
 
-** AUTH **
+**AUTH Endpoint**
 
-This endpoint will authenticate a user provided they exist in the system and return a valid JWT token that can be used to request further jobs endpoints. This token is valid for 2 hrs and will need to be renewed after that to make further requests.
+This endpoint will authenticate a user provided they exist in the system and return a valid JWT token that can be used to request further jobs endpoints. This token is valid for 1 hour and will need to be renewed after that to make further requests.
 
 Note: There is not refresh token / exchange token api implemented yet.
 
