@@ -45,7 +45,7 @@ external database port = 3307
 
 ## Initial seed
 
-The database can be seeded with some dummy data including user data. Seed file contains users with all having the same password:
+The database can be seeded with some dummy data including user data. Seed file contains users with all having the same password. The seed file also creates a default user with the credentials below:
 
 ```
 email: user@example.com
