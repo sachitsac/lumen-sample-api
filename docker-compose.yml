@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secr3t
+      MYSQL_ROOT_PASSWORD: secr3t
+      MYSQL_DATABASE: codingChallenge
+    volumes:
+      - ./db_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    networks:
+      - app-network
+  php:
+    build:
+      context: ./
+      dockerfile: docker/php/Dockerfile
+    image: backend
+    networks:
+      - app-network
+    links:
+      - db
+    volumes:
+      - ./src:/var/www/app
+    ports:
+      - "9000:9000"
+    container_name: php-app
+  nginx:
+    build:
+      context: ./
+      dockerfile: docker/nginx/Dockerfile
+    networks:
+      - app-network
+    ports:
+      - '8080:80'
+      - '443:443'
+    volumes:
+      - ./src:/var/www/app
+    links:
+      - php
+
+networks:
+  app-network:
+    driver: bridge
