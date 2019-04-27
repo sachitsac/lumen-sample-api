@@ -30,13 +30,35 @@ docker-compose exec php php artisan db:seed
 docker-compose exec php vendor/bin/phpunit
 ```
 
+## Database config
+
+```
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=codingChallenge
+DB_USERNAME=root
+DB_PASSWORD=secr3t
+
+external database port = 3307
+```
+
+## Initial seed
+
+The database can be seeded with some dummy data including user data. Seed file contains users with all having the same password. The seed file also creates a default user with the credentials below:
+
+```
+email: user@example.com
+password: secr3t12345
+```
+
 ## Documentation
 
 ### API
 
-** AUTH **
+**AUTH Endpoint**
 
-This endpoint will authenticate a user provided they exist in the system and return a valid JWT token that can be used to request further jobs endpoints. This token is valid for 2 hrs and will need to be renewed after that to make further requests.
+This endpoint will authenticate a user provided they exist in the system and return a valid JWT token that can be used to request further jobs endpoints. This token is valid for 1 hour and will need to be renewed after that to make further requests.
 
 Note: There is not refresh token / exchange token api implemented yet.
 
