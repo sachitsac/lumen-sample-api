@@ -8,10 +8,11 @@ commands:
       - checkout
       - run:
           name: Building image - web
-          command: docker build -t lumen-sample-api:latest -f docker/php/Dockerfile
+          command: docker build -t lumen-sample-api:latest docker/php/Dockerfile
 jobs:
   build-web:
-    machine: true
+    docker:
+      - image: circleci/php:7.3-stretch-node-browsers
     steps:
       - build-web-image
 workflows:
