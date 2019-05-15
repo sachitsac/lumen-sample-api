@@ -8,7 +8,7 @@ commands:
       - checkout
       - run:
           name: Building image - web
-          command: ls -l
+          command: docker build -f docker/php/Dockerfile -t lumen-sample-api:latest
 jobs:
   build-web:
     docker:
