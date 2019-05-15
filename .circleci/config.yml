@@ -7,18 +7,20 @@ commands:
     steps:
       - checkout
       - run:
-        name: "Building image >> web"
-        command: docker build -f ./docker/php/Dockerfile -t lumen-sample-api:latest
+          name: Building image - web
+          command: docker build -t lumen-sample-api:latest ./docker/php/Dockerfile
 jobs:
-  - build:
-    - steps:
+  build-web:
+    machine: true
+    steps:
       - build-web
 workflows:
   version: 2
   build:
     jobs:
-      - web:
-        context: build
-        filters:
+      - build-web:
+          context: build-web
+          filters:
             branches:
               only: master
+
