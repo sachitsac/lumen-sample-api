@@ -6,6 +6,7 @@ commands:
     description: Build web image
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Building image - web
           command: docker build -t lumen-sample-api:latest - < docker/php/Dockerfile
