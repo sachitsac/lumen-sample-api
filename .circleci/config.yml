@@ -14,7 +14,6 @@ jobs:
   build-web:
     docker:
       - image: circleci/php:7.3-stretch-node-browsers
-    working_directory: docker
     steps:
       - build-web-image
 workflows:
@@ -22,6 +21,7 @@ workflows:
   build:
     jobs:
       - build-web:
+          context: ./
           filters:
             branches:
               only: circleci
