@@ -19,7 +19,6 @@ workflows:
   build:
     jobs:
       - build-web:
-          context: src
           filters:
             branches:
               only: circleci
