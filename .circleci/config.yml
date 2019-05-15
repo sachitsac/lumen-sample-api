@@ -8,7 +8,7 @@ commands:
       - checkout
       - run:
           name: Building image - web
-          command: docker build -t lumen-sample-api:latest ./docker/php/Dockerfile
+          command: docker build -t lumen-sample-api:latest -f docker/php/Dockerfile
 jobs:
   build-web:
     machine: true
@@ -19,7 +19,7 @@ workflows:
   build:
     jobs:
       - build-web:
-          context: .
+          context: src
           filters:
             branches:
               only: circleci
