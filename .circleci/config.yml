@@ -21,7 +21,6 @@ workflows:
   build:
     jobs:
       - build-web:
-          context: ./
           filters:
             branches:
               only: circleci
