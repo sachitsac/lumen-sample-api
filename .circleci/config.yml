@@ -2,7 +2,7 @@
 version: 2.1
 
 commands:
-  build-web:
+  build-web-image:
     description: Build web image
     steps:
       - checkout
@@ -13,13 +13,12 @@ jobs:
   build-web:
     machine: true
     steps:
-      - build-web
+      - build-web-image
 workflows:
   version: 2
   build:
     jobs:
       - build-web:
-          context: build-web
           filters:
             branches:
               only: circleci
