@@ -22,5 +22,5 @@ workflows:
           context: build-web
           filters:
             branches:
-              only: master
+              only: circleci
 
