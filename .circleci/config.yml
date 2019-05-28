@@ -11,10 +11,27 @@ commands:
           name: Building image - web
           command: docker build -f docker/php/Dockerfile -t $WEB_IMAGE_NAME:$CIRCLE_SHA1 .
       - run:
-          name: Publish Docker Image to Docker Hub
-          command: |
-            echo "$DOCKER_HUB_SECRET" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
-            docker push $WEB_IMAGE_NAME:$CIRCLE_SHA1
+          name: Archive Docker image
+          command: docker save -o web-image.tar $WEB_IMAGE_NAME
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./image.tar
+  publish-web:
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker
+      - run:
+          name: Load archived Docker image
+          command: docker load -i /tmp/workspace/web-image.tar
+      - run:
+            name: Publish Docker Image to Docker Hub
+            command: |
+              echo "$DOCKER_HUB_SECRET" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+              docker tag $WEB_IMAGE_NAME:latest $WEB_IMAGE_NAME:$CIRCLE_SHA1
+              docker push $WEB_IMAGE_NAME:latest
+              docker push $WEB_IMAGE_NAME:$CIRCLE_SHA1
 jobs:
   build-web:
     environment:
@@ -23,11 +40,22 @@ jobs:
       - image: circleci/php:7.3-stretch-node-browsers
     steps:
       - build-web-image
+  publish-latest:
+    docker:
+      - image: circleci/php:7.3-stretch-node-browsers
+    steps:
+      - publish-web
 workflows:
   version: 2
   build:
     jobs:
       - build-web:
+          filters:
+            branches:
+              only: circleci
+      - publish-latest:
+          requires:
+            - build-web
           filters:
             branches:
               only: circleci
