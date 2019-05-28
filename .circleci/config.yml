@@ -3,9 +3,7 @@ version: 2.1
 
 commands:
   build-web-image:
-    description: Build web image
-    environment:
-      WEB_IMAGE_NAME=lumen-sample-api-web
+    description: Build web image    
     steps:
       - checkout
       - setup_remote_docker
@@ -19,6 +17,8 @@ commands:
             docker push $WEB_IMAGE_NAME:$CIRCLE_SHA1
 jobs:
   build-web:
+    environment:
+      WEB_IMAGE_NAME=lumen-sample-api-web
     docker:
       - image: circleci/php:7.3-stretch-node-browsers
     steps:
