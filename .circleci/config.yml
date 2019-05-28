@@ -9,7 +9,12 @@ commands:
       - setup_remote_docker
       - run:
           name: Building image - web
-          command: docker build -f docker/php/Dockerfile -t lumen-sample-api:$CIRCLE_SHA1 .
+          command: docker build -f docker/php/Dockerfile -t lumen-sample-api/web:$CIRCLE_SHA1 .
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push lumen-sample-api/web:$CIRCLE_SHA1
 jobs:
   build-web:
     docker:
