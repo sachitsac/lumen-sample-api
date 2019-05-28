@@ -16,7 +16,7 @@ commands:
       - persist_to_workspace:
           root: .
           paths:
-            - ./image.tar
+            - ./web-image.tar
   publish-web:
     steps:
       - attach_workspace:
