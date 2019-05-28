@@ -1,5 +1,7 @@
 # Sample Api based on Laravel's Lumen micro-framework
 
+[![CircleCI](https://circleci.com/gh/sachitsac/lumen-sample-api.svg?style=svg)](https://circleci.com/gh/sachitsac/lumen-sample-api)
+
 ## How to
 
 ### Prerequisite
