@@ -1,0 +1,64 @@
+# Use the latest 2.1 version of CircleCI pipeline processing engine, see https://circleci.com/docs/2.0/configuration-reference/
+version: 2.1
+
+commands:
+  build-web-image:
+    description: Build web image    
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Building image - web
+          command: docker build -f docker/php/Dockerfile -t $WEB_IMAGE_NAME:latest .
+      - run:
+          name: Archive Docker image
+          command: docker save -o web-image.tar $WEB_IMAGE_NAME
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./web-image.tar
+  publish-web:
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker
+      - run:
+          name: Load archived Docker image
+          command: docker load -i /tmp/workspace/web-image.tar
+      - run:
+            name: Publish Docker Image to Docker Hub
+            command: |
+              echo "$DOCKER_HUB_SECRET" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+              docker tag $WEB_IMAGE_NAME:latest $WEB_IMAGE_NAME:$CIRCLE_SHA1
+              docker push $WEB_IMAGE_NAME:latest
+              docker push $WEB_IMAGE_NAME:$CIRCLE_SHA1
+jobs:
+  build-web:
+    environment:
+      WEB_IMAGE_NAME=sachitsac/lumen-sample-api-web
+    docker:
+      - image: circleci/php:7.3-stretch-node-browsers
+    steps:
+      - build-web-image
+  publish-latest:
+    environment:
+      WEB_IMAGE_NAME=sachitsac/lumen-sample-api-web
+    docker:
+      - image: circleci/php:7.3-stretch-node-browsers
+    steps:
+      - publish-web
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-web:
+          filters:
+            branches:
+              only: circleci
+      - publish-latest:
+          requires:
+            - build-web
+          filters:
+            branches:
+              only: circleci
+
