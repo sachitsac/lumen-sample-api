@@ -11,7 +11,7 @@ RUN composer install  \
   --no-scripts
 
 COPY ./src /var/www/app
-COPY ./src/.env /var/www/app/.env
+COPY ./src/.env.example /var/www/app/.env
 RUN composer dump-autoload --optimize --classmap-authoritative
 RUN ls -l
 
