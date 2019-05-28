@@ -41,6 +41,8 @@ jobs:
     steps:
       - build-web-image
   publish-latest:
+    environment:
+      WEB_IMAGE_NAME=sachitsac/lumen-sample-api-web
     docker:
       - image: circleci/php:7.3-stretch-node-browsers
     steps:
