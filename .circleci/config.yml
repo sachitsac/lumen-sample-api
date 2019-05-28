@@ -9,7 +9,7 @@ commands:
       - setup_remote_docker
       - run:
           name: Building image - web
-          command: docker build -f docker/php/Dockerfile -t lumen-sample-api:latest .
+          command: docker build -f docker/php/Dockerfile -t lumen-sample-api:$CIRCLE_SHA1 .
 jobs:
   build-web:
     docker:
