@@ -9,7 +9,7 @@ commands:
       - setup_remote_docker
       - run:
           name: Building image - web
-          command: docker build -f docker/php/Dockerfile -t $WEB_IMAGE_NAME:$CIRCLE_SHA1 .
+          command: docker build -f docker/php/Dockerfile -t $WEB_IMAGE_NAME:latest .
       - run:
           name: Archive Docker image
           command: docker save -o web-image.tar $WEB_IMAGE_NAME
